@@ -1,15 +1,15 @@
-# spark-ai
+# spark-ai-browser
 
-> 基于科大讯飞「星火大模型」WEB 版本封装
+> 基于科大讯飞「星火大模型」browser 版本封装
 
 ## 安装
 
 安装步骤和依赖说明
 
 ```javascript
- npm install spark-ai
- pnpm add spark-ai
- yarn add spark-ai
+ npm install spark-ai-browser
+ pnpm add spark-ai-browser
+ yarn add spark-ai-browser
 ```
 
 # 使用
@@ -20,7 +20,7 @@
 
 ```javascript
 // 代码示例
-import { Spark } from 'spark-ai';
+import { Spark } from 'spark-ai-browser';
 
 interface OptionType {
   appId: string; // 配置
