@@ -38,37 +38,24 @@ spark.watchDataChange((text: string, ResultData:ResultData) => {
 });
 
 // 发送消息
-
-/*
-payload 默认配置
-{
-    message: {
-          text: [
-            {
-              role: 'user',
-              content,
-            },
-          ],
-        },
-}
-*/
-
-/*
-parameter 默认配置
-
-{
-    chat: {
-          domain: this.option.modelDomain,
-          temperature: 0.5,
-          max_tokens: 1024,
-        },
-}
-*/
 spark.webSocketSend(body as SendBody);
 
 interface SendBody {
   uuid?: string; // 可以用来标记发送消息人身份，默认系统随机数
   content: string;
+
+  // payload 默认配置
+  // {
+  //     message: {
+  //           text: [
+  //             {
+  //               role: 'user',
+  //               content,
+  //             },
+  //           ],
+  //         },
+  // }
+
   payload?: {
     message: {
       text: {
@@ -77,6 +64,15 @@ interface SendBody {
       }[],
     },
   };
+
+  // parameter 默认配置
+  // {
+  //     chat: {
+  //           domain: this.option.modelDomain,
+  //           temperature: 0.5,
+  //           max_tokens: 1024,
+  //         },
+  // }
   parameter?: {
     chat: {
       domin: string,
