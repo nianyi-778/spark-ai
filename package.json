@@ -4,7 +4,7 @@
   "author": {
     "name": "nianyi",
     "email": "nianyi778@gmail.com",
-    "url": ""
+    "url": "https://github.com/nianyi-778/spark-ai"
   },
   "types": "./dist/types/index.d.ts",
   "main": "./dist/lib/index.js",
