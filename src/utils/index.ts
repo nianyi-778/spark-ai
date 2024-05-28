@@ -31,10 +31,10 @@ export function getUrl(version: OptionType['version']) {
   const apiKey = API_KEY;
   const apiSecret = API_SECRET;
 
-  let url = `wss://${httpUrl.host}${httpUrl.pathname}`;
+  const url = `wss://${httpUrl.host}${httpUrl.pathname}`;
 
   const { host } = location;
-  const date = new Date().toString();
+  const date = new Date().toUTCString();
   const algorithm = 'hmac-sha256';
   const headers = 'host date request-line';
   const signatureOrigin = `host: ${host}\ndate: ${date}\nGET ${httpUrl.pathname} HTTP/1.1`;
@@ -42,9 +42,7 @@ export function getUrl(version: OptionType['version']) {
   const signature = CryptoJS.enc.Base64.stringify(signatureSha);
   const authorizationOrigin = `api_key="${apiKey}", algorithm="${algorithm}", headers="${headers}", signature="${signature}"`;
   const authorization = btoa(authorizationOrigin);
-  url = `${url}?authorization=${authorization}&date=${date}&host=${host}`;
-
-  return url;
+  return `${url}?authorization=${authorization}&date=${date}&host=${host}`;
 }
 
 type UUID = string;

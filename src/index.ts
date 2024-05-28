@@ -1,4 +1,4 @@
-import { generateUUID, getModelDomain } from './utils';
+import { generateUUID, getModelDomain, getUrl } from './utils';
 
 interface SendBody {
   uuid?: string; // 可以用来标记发送消息人身份，默认系统随机数
@@ -80,7 +80,7 @@ export class Spark {
       sendType,
       version,
       modelDomain: getModelDomain(version),
-      url: getModelDomain(version),
+      url: getUrl(version),
     };
   }
 
