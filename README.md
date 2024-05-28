@@ -30,7 +30,6 @@ interface OptionType {
   version: '1.1' | '2.1' | '3.1' | '3.5'; //default: '1.1';
 }
 const spark = new Spark(option );
-spark.start();
 
 // 监听数据响应
 spark.watchDataChange((text: string, ResultData:ResultData) => {
