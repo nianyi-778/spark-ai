@@ -43,6 +43,7 @@ export interface OptionType {
   appId: string;
   apiSecret: string;
   apiKey: string;
+  sendType?: 'step' | 'all';
   version?: '1.1' | '2.1' | '3.1' | '3.5';
 }
 
@@ -72,10 +73,11 @@ export class Spark {
   observers: Callback[];
 
   constructor(option: OptionType) {
-    const { version = '1.1', ...rest } = option;
+    const { version = '1.1', sendType = 'step', ...rest } = option;
     this.observers = [];
     this.option = {
       ...rest,
+      sendType,
       version,
       modelDomain: getModelDomain(version),
       url: getModelDomain(version),
@@ -153,7 +155,9 @@ export class Spark {
       (allContent, value) => allContent + value.content,
       '',
     );
-    this.dataStepChange(totalContent, jsonData);
+    if (this.option.sendType === 'step') {
+      this.dataStepChange(totalContent, jsonData);
+    }
     this.totalRes += totalContent;
     // 提问失败
     if (jsonData.header.code !== 0) {
@@ -165,7 +169,9 @@ export class Spark {
     }
     if (jsonData.header.code === 0 && jsonData.header.status === 2) {
       // 请求结束
-      this.dataAllOverChange(this.totalRes as string, jsonData);
+      if (this.option.sendType === 'all') {
+        this.dataAllOverChange(this.totalRes as string, jsonData);
+      }
       this.ttsWS?.close();
       this.setStatus(Status.init);
     }

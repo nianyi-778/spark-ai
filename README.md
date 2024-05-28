@@ -26,6 +26,7 @@ interface OptionType {
   appId: string; // 配置
   apiSecret: string; // 配置
   apiKey: string; // 配置
+  sendType:"step"|"all"; // step 每段消息都会通知更新监听函数， all 请求完毕才会更新监听函数
   version: '1.1' | '2.1' | '3.1' | '3.5'; //default: '1.1';
 }
 const spark = new Spark(option );
