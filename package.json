@@ -6,6 +6,13 @@
     "email": "nianyi778@gmail.com",
     "url": "https://github.com/nianyi-778/spark-ai"
   },
+  "description": "基于科大讯飞「星火大模型」WEB 版本封装",
+    "keywords": [
+    "星火大模型",
+    "Spark",
+    "人工智能",
+    "AI"
+  ],
   "types": "./dist/types/index.d.ts",
   "main": "./dist/lib/index.js",
   "module": "./dist/es/index.js",
