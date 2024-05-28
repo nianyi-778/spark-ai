@@ -47,9 +47,10 @@ export function getUrl(version: OptionType['version']) {
 
 type UUID = string;
 
-export function generateUUID(): UUID {
+export function generateUUID(idStyle = 'xxxxx'): UUID {
   let d = new Date().getTime();
-  const uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[x]/g, () => {
+
+  const uuid = idStyle.replace(/[x]/g, () => {
     const r = (d + Math.random() * 16) % 16;
     d = Math.floor(d / 16);
     return r.toString(16);

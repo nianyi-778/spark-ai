@@ -2,7 +2,7 @@ import { generateUUID, getModelDomain, getUrl } from './utils';
 
 interface SendBody {
   uuid?: string; // 可以用来标记发送消息人身份，默认系统随机数
-  content: string;
+  content?: string;
   payload?: {
     message: {
       text: {
@@ -68,7 +68,7 @@ export class Spark {
 
   totalRes?: string;
 
-  ttsWS?: WebSocket;
+  ttsWS?: WebSocket | null;
 
   observers: Callback[];
 
@@ -98,23 +98,29 @@ export class Spark {
     return this.status;
   }
 
-  start() {
+  async start() {
     this.totalRes = ''; // 请空回答历史
-    this.connectWebSocket();
+    await this.connectWebSocket();
   }
 
   // 连接websocket
   connectWebSocket() {
-    this.setStatus(Status.ttsing);
-    const { url } = this.option;
-    if (url) {
+    return new Promise<void>(resolve => {
+      this.setStatus(Status.ttsing);
+      const { url } = this.option;
+      if (!url) {
+        resolve();
+        return;
+      }
       if ('WebSocket' in window) {
         this.ttsWS = new WebSocket(url);
       } else {
+        resolve();
         throw new Error('浏览器不支持WebSocket');
         return;
       }
       this.ttsWS.onopen = () => {
+        resolve();
         // this.webSocketSend();
         console.info('WebSocket connection');
       };
@@ -123,15 +129,17 @@ export class Spark {
         this.messageDataChange(e.data);
       };
       this.ttsWS.onerror = () => {
+        this.ttsWS = null;
         this.setStatus(Status.error);
         console.info('WebSocket报错，请f12查看详情');
         console.error(`详情查看：${encodeURI(url.replace('wss:', 'https:'))}`);
       };
       this.ttsWS.onclose = e => {
-        console.log(e);
+        console.error(e);
         this.setStatus(Status.close);
+        this.ttsWS = null;
       };
-    }
+    });
   }
 
   // 监听变化
@@ -178,12 +186,17 @@ export class Spark {
   }
 
   // websocket发送数据
-  webSocketSend({
+  async webSocketSend({
     uuid = generateUUID(),
     content,
     payload,
     parameter,
   }: SendBody) {
+    await this.start();
+    if (!this.ttsWS) {
+      console.error('socket is not create');
+      return;
+    }
     const params = {
       header: {
         app_id: this.option.appId,
