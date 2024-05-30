@@ -101,6 +101,14 @@ interface ResultData {
     },
   };
 }
+
+
+// 我只想获取 socket url 地址，我懒得搞加密那些动作，剩下的事，我自己做！
+// OK 满足
+
+const spark = new Spark(option );
+spark.getOption().url  // socket url 完整地址，接下来就交给你自己了。
+
 ```
 
 # 贡献
