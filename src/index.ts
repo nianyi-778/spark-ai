@@ -206,7 +206,8 @@ export class Spark {
         chat: {
           domain: this.option.modelDomain,
           temperature: 0.5,
-          max_tokens: 1024,
+          max_tokens: 2048,
+          top_k: 4,
         },
       },
       payload: payload || {
