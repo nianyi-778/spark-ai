@@ -80,7 +80,7 @@ export class Spark {
       sendType,
       version,
       modelDomain: getModelDomain(version),
-      url: getUrl(version),
+      url: getUrl({ version, apiKey: rest.apiKey, apiSecret: rest.apiSecret }),
     };
   }
 

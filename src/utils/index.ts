@@ -23,13 +23,21 @@ export function getModelDomain(version: OptionType['version']) {
   return modelDomain;
 }
 
-export function getUrl(version: OptionType['version']) {
+export function getUrl({
+  version,
+  apiKey,
+  apiSecret,
+}: {
+  version: OptionType['version'];
+  apiSecret: OptionType['apiSecret'];
+  apiKey: OptionType['apiKey'];
+}) {
   const httpUrl = new URL(`https://spark-api.xf-yun.com/v${version}/chat`);
-  const API_SECRET = 'ZDIyYjc1NTA3NDVkNzhkNjRlZmNmOWE0';
-  const API_KEY = 'abad6abee2753ad71f0eddfa7b8e2324';
+  // const API_SECRET = 'ZDIyYjc1NTA3NDVkNzhkNjRlZmNmOWE0';
+  // const API_KEY = 'abad6abee2753ad71f0eddfa7b8e2324';
 
-  const apiKey = API_KEY;
-  const apiSecret = API_SECRET;
+  // const apiKey = API_KEY;
+  // const apiSecret = API_SECRET;
 
   const url = `wss://${httpUrl.host}${httpUrl.pathname}`;
 
